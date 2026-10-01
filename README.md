@@ -36,7 +36,8 @@ The system automatically processes applicant data from Google Sheets, evaluates 
   - Sends the summary via email every Monday at 08:00 WIB.
 
 ---
-<img width="653" height="364" alt="image" src="https://github.com/user-attachments/assets/6d945055-edcf-4c15-9ea9-d03504d5f4cb" />
+<img width="591" height="358" alt="image" src="https://github.com/user-attachments/assets/d8cb4353-fcb4-40b2-84ad-f6745bf2b412" />
+
 
 ## 🔄 Workflow Overview
 
