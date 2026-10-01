@@ -1,0 +1,1153 @@
+{
+  "name": "Final Project — Sistem Penerimaan Murid Baru",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": []
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "16BhoeJUTWtmHMc4Xe7M-5kWEsToradTcNt6LoR5pxPE",
+          "mode": "list",
+          "cachedResultName": "Form Penerimaan Siswa Baru TK XYZ (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16BhoeJUTWtmHMc4Xe7M-5kWEsToradTcNt6LoR5pxPE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 748729170,
+          "mode": "list",
+          "cachedResultName": "Gelombang I",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16BhoeJUTWtmHMc4Xe7M-5kWEsToradTcNt6LoR5pxPE/edit#gid=748729170"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "id": "12c4be2b-b078-41a7-bd29-ae077b59d778",
+      "name": "Google Sheets Trigger",
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        -32
+      ],
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "8S6ZDt5cOAzg7nVI",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "email-ada",
+              "leftValue": "={{ $json['Email Orang Tua'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "umur-ada",
+              "leftValue": "={{ String($json['Umur Anak (tahun)'] ?? '') }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "db15834c-b2bd-46fe-8033-6e6a936aa2fb",
+      "name": "Hanya Data Lengkap",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        176,
+        -32
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "24cbe0cc-984a-4fd8-8ba9-06541f1c9769",
+              "leftValue": "={{ $json['Umur Anak (tahun)'] }}",
+              "rightValue": 6,
+              "operator": {
+                "type": "number",
+                "operation": "lte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "9006cae7-11bc-4797-9333-a7eae39cdfb8",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        368,
+        -32
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ parseInt($json[\"Kisaran Gaji Orang Tua\"].match(/[\\d,]+$/)[0].replace(/,/g, ''), 10) }}",
+                    "rightValue": 4000000,
+                    "operator": {
+                      "type": "number",
+                      "operation": "lte"
+                    },
+                    "id": "6e8bcad1-88b8-4007-91f5-1ae62df57394"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "99744ade-da92-4a4e-ba4d-13342fcb7b0e",
+                    "leftValue": "={{ parseInt($json[\"Kisaran Gaji Orang Tua\"].match(/[\\d,]+$/)[0].replace(/,/g, ''), 10) }}",
+                    "rightValue": 10000000,
+                    "operator": {
+                      "type": "number",
+                      "operation": "lte"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "78f4944d-91b7-49dc-b945-2d0d302c1370",
+                    "leftValue": "={{ parseInt($json[\"Kisaran Gaji Orang Tua\"].match(/[\\d,]+$/)[0].replace(/,/g, ''), 10) }}",
+                    "rightValue": 10000000,
+                    "operator": {
+                      "type": "number",
+                      "operation": "gt"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3cf1948e-8e6f-488b-84c1-d1e0a2b2be30",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        560,
+        -192
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "16BhoeJUTWtmHMc4Xe7M-5kWEsToradTcNt6LoR5pxPE",
+          "mode": "list",
+          "cachedResultName": "Form Penerimaan Siswa Baru TK XYZ (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16BhoeJUTWtmHMc4Xe7M-5kWEsToradTcNt6LoR5pxPE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1353715407,
+          "mode": "list",
+          "cachedResultName": "Ditolak",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16BhoeJUTWtmHMc4Xe7M-5kWEsToradTcNt6LoR5pxPE/edit#gid=1353715407"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nama Murid": "={{ $json['Nama Murid'] }}",
+            "Nama Orang Tua": "={{ $json['Nama Orang Tua'] }}",
+            "Tempat Lahir (Jika tidak ada silahkan di tambahkan)": "={{ $json['Tempat Lahir (Jika tidak ada silahkan di tambahkan)'] }}",
+            "Tanggal Lahir Anak": "={{ $json['Tanggal Lahir Anak'] }}",
+            "Pekerjaan Orang Tua": "={{ $json['Pekerjaan Orang Tua'] }}",
+            "Kisaran Gaji Orang Tua": "={{ $json['Kisaran Gaji Orang Tua'] }}",
+            "Nomor Whatsapp Orang Tua": "={{ $json['Nomor Whatsapp Orang Tua'] }}",
+            "Umur Anak (tahun)": "={{ $json['Umur Anak (tahun)'] }}",
+            "Email": "={{ $('If').item.json['Email Orang Tua'] }}",
+            "Tanggal Diproses": "={{ $now.toISO() }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nama Murid",
+              "displayName": "Nama Murid",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nama Orang Tua",
+              "displayName": "Nama Orang Tua",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Tempat Lahir (Jika tidak ada silahkan di tambahkan)",
+              "displayName": "Tempat Lahir (Jika tidak ada silahkan di tambahkan)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Tanggal Lahir Anak",
+              "displayName": "Tanggal Lahir Anak",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Pekerjaan Orang Tua",
+              "displayName": "Pekerjaan Orang Tua",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Kisaran Gaji Orang Tua",
+              "displayName": "Kisaran Gaji Orang Tua",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nomor Whatsapp Orang Tua",
+              "displayName": "Nomor Whatsapp Orang Tua",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Umur Anak (tahun)",
+              "displayName": "Umur Anak (tahun)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Tanggal Diproses",
+              "displayName": "Tanggal Diproses",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "bd18c4be-a3fd-43ca-b374-d803ee8d13fe",
+      "name": "Append row in sheet1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        768,
+        -240
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "rRSj1S2CTFkIAURe",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('If').item.json['Email Orang Tua'] }}",
+        "subject": "=Hasil Seleksi Penerimaan Siswa Baru TK XYZ - {{ $('If').item.json['Nama Murid'] }}",
+        "message": "=<p>Yth. Bapak/Ibu {{ $('If').item.json['Nama Orang Tua'] }},</p><p>Terima kasih telah mendaftarkan {{ $('If').item.json['Nama Murid'] }} di TK XYZ. Mohon maaf, saat ini ananda belum dapat kami terima.</p><p>Namun kami tetap mengundang Bapak/Ibu untuk datang ke <b>Open House</b> sekolah kami:</p><ul><li>Tanggal: {{ $now.plus({ days: 7 }).setLocale('id').toFormat('cccc, d MMMM yyyy') }}</li><li>Jam: 10.00 - 15.00 WIB</li><li>Lokasi: Cengkareng, Jakarta Barat</li></ul><p>Kami juga mengadakan sesi <b>Trial Class</b> pada {{ $now.plus({ days: 8 }).setLocale('id').toFormat('cccc, d MMMM yyyy') }}.</p><p>Hormat kami,<br>TK XYZ</p>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "a996af4d-b545-4d60-b1f7-f013681fdf25",
+      "name": "Kirim Email Maaf",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1008,
+        -240
+      ],
+      "webhookId": "2a840894-ad90-48d6-b4f0-0452022da227",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iwqmLBirCIOFnuGu",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "16BhoeJUTWtmHMc4Xe7M-5kWEsToradTcNt6LoR5pxPE",
+          "mode": "list",
+          "cachedResultName": "Form Penerimaan Siswa Baru TK XYZ (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16BhoeJUTWtmHMc4Xe7M-5kWEsToradTcNt6LoR5pxPE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 655630528,
+          "mode": "list",
+          "cachedResultName": "Diterima",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16BhoeJUTWtmHMc4Xe7M-5kWEsToradTcNt6LoR5pxPE/edit#gid=655630528"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nama Murid": "={{ $json['Nama Murid'] }}",
+            "Nama Orang Tua": "={{ $json['Nama Orang Tua'] }}",
+            "Tempat Lahir (Jika tidak ada silahkan di tambahkan)": "={{ $json['Tempat Lahir (Jika tidak ada silahkan di tambahkan)'] }}",
+            "Tanggal Lahir Anak": "={{ $json['Tanggal Lahir Anak'] }}",
+            "Pekerjaan Orang Tua": "={{ $json['Pekerjaan Orang Tua'] }}",
+            "Kisaran Gaji Orang Tua": "={{ $json['Kisaran Gaji Orang Tua'] }}",
+            "Nomor Whatsapp Orang Tua": "={{ $json['Nomor Whatsapp Orang Tua'] }}",
+            "Umur Anak (tahun)": "={{ $json['Umur Anak (tahun)'] }}",
+            "Email": "={{ $json['Email Orang Tua'] }}",
+            "Tanggal Diproses": "={{ $now.toISO() }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nama Murid",
+              "displayName": "Nama Murid",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nama Orang Tua",
+              "displayName": "Nama Orang Tua",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Tempat Lahir (Jika tidak ada silahkan di tambahkan)",
+              "displayName": "Tempat Lahir (Jika tidak ada silahkan di tambahkan)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Tanggal Lahir Anak",
+              "displayName": "Tanggal Lahir Anak",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Pekerjaan Orang Tua",
+              "displayName": "Pekerjaan Orang Tua",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Kisaran Gaji Orang Tua",
+              "displayName": "Kisaran Gaji Orang Tua",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nomor Whatsapp Orang Tua",
+              "displayName": "Nomor Whatsapp Orang Tua",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Umur Anak (tahun)",
+              "displayName": "Umur Anak (tahun)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Tanggal Diproses",
+              "displayName": "Tanggal Diproses",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "ee9a0453-c445-40f6-adce-5c5d7da02356",
+      "name": "Append row in sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        784,
+        -80
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "rRSj1S2CTFkIAURe",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('If').item.json['Email Orang Tua'] }}",
+        "subject": "=Selamat! {{ $('If').item.json['Nama Murid'] }} Diterima di TK XYZ",
+        "message": "=<p>Yth. Bapak/Ibu {{ $('If').item.json['Nama Orang Tua'] }},</p><p>Selamat! {{ $('If').item.json['Nama Murid'] }} dinyatakan <b>diterima</b> di TK XYZ.</p><p>Kami mengundang Bapak/Ibu untuk datang ke <b>Open House</b> sekolah:</p><ul><li>Tanggal: {{ $now.plus({ days: 9 }).setLocale('id').toFormat('cccc, d MMMM yyyy') }}</li><li>Jam: 10.00 - 15.00 WIB</li><li>Lokasi: Cengkareng, Jakarta Barat</li></ul><p>Mohon membawa <b>uang pendaftaran sebesar Rp150.000</b>.</p><p>Sehari setelahnya, {{ $now.plus({ days: 10 }).setLocale('id').toFormat('cccc, d MMMM yyyy') }}, ada sesi <b>Trial Class</b> untuk ananda.</p><p>Hormat kami,<br>TK XYZ</p>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "98cf0e65-6e1d-486d-b9e3-a327660b3030",
+      "name": "Kirim Email Selamat",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1008,
+        -80
+      ],
+      "webhookId": "445a4a95-30f3-4751-8783-7a68b65f9dbb",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iwqmLBirCIOFnuGu",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Berikan 3 rekomendasi Sekolah Dasar (SD) yang benar-benar ada dan berlokasi di atau dekat {{ $json['Tempat Lahir (Jika tidak ada silahkan di tambahkan)'] }}, Indonesia, untuk anak bernama {{ $json['Nama Murid'] }} yang berumur {{ $json['Umur Anak (tahun)'] }} tahun. Untuk tiap sekolah tulis nama sekolah, perkiraan alamat/area, dan 1 kalimat alasan singkat. Jawab HANYA dalam format HTML <ol><li>...</li></ol> tanpa teks pembuka, penutup, atau code block.",
+        "batching": {}
+      },
+      "id": "d46cb746-bb8c-4aa7-8bb3-44941dc50ede",
+      "name": "Basic LLM Chain",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        688,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-oss-120b",
+        "options": {}
+      },
+      "id": "e586cfa3-2d05-4cef-a085-0809481e386e",
+      "name": "Groq Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        688,
+        240
+      ],
+      "credentials": {
+        "groqApi": {
+          "id": "gP0LmPE5UzJU7UDd",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('If').item.json['Email Orang Tua'] }}",
+        "subject": "=Hasil Pendaftaran TK XYZ & Rekomendasi SD untuk {{ $('If').item.json['Nama Murid'] }}",
+        "message": "=<p>Yth. Bapak/Ibu {{ $('If').item.json['Nama Orang Tua'] }},</p><p>Terima kasih telah mendaftarkan {{ $('If').item.json['Nama Murid'] }} di TK XYZ. Karena usia ananda ({{ $('If').item.json['Umur Anak (tahun)'] }} tahun) sudah melewati batas usia TK, mohon maaf ananda belum dapat kami terima.</p><p>Sebagai gantinya, berikut 3 rekomendasi Sekolah Dasar di sekitar {{ $('If').item.json['Tempat Lahir (Jika tidak ada silahkan di tambahkan)'] }} yang bisa Bapak/Ibu pertimbangkan:</p>{{ ($json.text || '').replace(/```html|```/g, '').trim() }}<p>Semoga bermanfaat dan sukses selalu untuk ananda.</p><p>Hormat kami,<br>TK XYZ</p>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "633eb1d5-286e-4ebc-bc78-ab103136948b",
+      "name": "Kirim Email Rekomendasi SD",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1008,
+        80
+      ],
+      "webhookId": "144a075e-1197-405c-9f49-6f5a25a4570e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iwqmLBirCIOFnuGu",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "di GirHub bagian README nya\n\nada link dari n8n yang sudah di upload dan screenshoot dari workflow yang sudah di buat",
+        "height": 192
+      },
+      "id": "fde0b916-e1c1-4e6d-9cc3-dbc789bc36b7",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -864,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1
+              ],
+              "triggerAtHour": 8
+            }
+          ]
+        }
+      },
+      "id": "a26514a0-5044-4ca0-a121-011a28849c72",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -336,
+        384
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "16BhoeJUTWtmHMc4Xe7M-5kWEsToradTcNt6LoR5pxPE",
+          "mode": "list",
+          "cachedResultName": "Form Penerimaan Siswa Baru TK XYZ (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16BhoeJUTWtmHMc4Xe7M-5kWEsToradTcNt6LoR5pxPE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 655630528,
+          "mode": "list",
+          "cachedResultName": "Diterima",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16BhoeJUTWtmHMc4Xe7M-5kWEsToradTcNt6LoR5pxPE/edit#gid=655630528"
+        },
+        "filtersUI": {
+          "values": []
+        },
+        "options": {}
+      },
+      "id": "f2f53f47-57f1-4249-a7a4-24a6218d18df",
+      "name": "Get row(s) in sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -112,
+        256
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "rRSj1S2CTFkIAURe",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "diterima-7hari",
+              "leftValue": "={{ !!$json['Tanggal Diproses'] && DateTime.fromISO(String($json['Tanggal Diproses'])) >= $now.minus({ days: 7 }) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a60fc98b-d289-4120-bf37-5b48756a5230",
+      "name": "Filter Diterima 7 Hari",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        80,
+        256
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "fieldsToSummarize": {
+          "values": [
+            {
+              "field": "Nama Murid"
+            },
+            {
+              "aggregation": "append",
+              "field": "Nama Murid"
+            }
+          ]
+        },
+        "options": {
+          "outputFormat": "singleItem"
+        }
+      },
+      "id": "2029f475-4b58-46b2-a510-e36e21fbcfb1",
+      "name": "Summarize",
+      "type": "n8n-nodes-base.summarize",
+      "typeVersion": 1.1,
+      "position": [
+        272,
+        256
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "16BhoeJUTWtmHMc4Xe7M-5kWEsToradTcNt6LoR5pxPE",
+          "mode": "list",
+          "cachedResultName": "Form Penerimaan Siswa Baru TK XYZ (Responses)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16BhoeJUTWtmHMc4Xe7M-5kWEsToradTcNt6LoR5pxPE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1353715407,
+          "mode": "list",
+          "cachedResultName": "Ditolak",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/16BhoeJUTWtmHMc4Xe7M-5kWEsToradTcNt6LoR5pxPE/edit#gid=1353715407"
+        },
+        "options": {}
+      },
+      "id": "d26c1995-3fc3-41ab-b82f-d0955b24da67",
+      "name": "Get row(s) in sheet1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -112,
+        512
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "rRSj1S2CTFkIAURe",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ditolak-7hari",
+              "leftValue": "={{ !!$json['Tanggal Diproses'] && DateTime.fromISO(String($json['Tanggal Diproses'])) >= $now.minus({ days: 7 }) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "05e4b056-0aea-4945-8dbe-fc7dee8d2c7f",
+      "name": "Filter Ditolak 7 Hari",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        80,
+        512
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "fieldsToSummarize": {
+          "values": [
+            {
+              "field": "Nama Murid"
+            },
+            {
+              "aggregation": "append",
+              "field": "Nama Murid"
+            }
+          ]
+        },
+        "options": {
+          "outputFormat": "singleItem"
+        }
+      },
+      "id": "34173bec-354d-4014-a75f-4f56e3c0d1d9",
+      "name": "Summarize1",
+      "type": "n8n-nodes-base.summarize",
+      "typeVersion": 1.1,
+      "position": [
+        272,
+        512
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "id": "b49e66ac-0393-4f8f-aa8b-a547c7381953",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        448,
+        384
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "dennisfahriansyah@gmail.com",
+        "subject": "=Executive Summary Penerimaan Siswa TK XYZ - {{ $now.minus({ days: 7 }).setLocale('id').toFormat('d MMM') }} s/d {{ $now.setLocale('id').toFormat('d MMM yyyy') }}",
+        "message": "=<h2>Executive Summary Mingguan - TK XYZ</h2><p>Periode: {{ $now.minus({ days: 7 }).setLocale('id').toFormat('d MMMM yyyy') }} s/d {{ $now.setLocale('id').toFormat('d MMMM yyyy') }}</p><table border=\"1\" cellpadding=\"8\" cellspacing=\"0\" style=\"border-collapse:collapse\"><tr><th>Status</th><th>Jumlah Siswa</th></tr><tr><td>Diterima</td><td>{{ Object.entries($('Summarize').first().json).find(([k]) => k.startsWith('count_'))?.[1] ?? 0 }}</td></tr><tr><td>Ditolak</td><td>{{ Object.entries($('Summarize1').first().json).find(([k]) => k.startsWith('count_'))?.[1] ?? 0 }}</td></tr></table><h3>Siswa Diterima</h3>{{ (() => { const l = Object.entries($('Summarize').first().json).find(([k]) => k.startsWith('appended_'))?.[1] || []; return l.length ? '<ol>' + l.map(n => '<li>' + n + '</li>').join('') + '</ol>' : '<p>Tidak ada siswa diterima minggu ini.</p>'; })() }}<h3>Siswa Ditolak</h3>{{ (() => { const l = Object.entries($('Summarize1').first().json).find(([k]) => k.startsWith('appended_'))?.[1] || []; return l.length ? '<ol>' + l.map(n => '<li>' + n + '</li>').join('') + '</ol>' : '<p>Tidak ada siswa ditolak minggu ini.</p>'; })() }}<p>Email ini dikirim otomatis setiap Senin pukul 08.00 WIB.</p>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "7403daab-6066-4910-9286-baa5ea4b0f7c",
+      "name": "Send a message",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        640,
+        384
+      ],
+      "webhookId": "bf593934-b79c-4fe2-92a2-a620bafe54ce",
+      "executeOnce": true,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "iwqmLBirCIOFnuGu",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "Background Masalah\n\nBanyaknya jumlah pendaftar penerimaan murid baru yang harus di tampung dan masih dikerjakan secara manual",
+        "height": 112
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -896,
+        -32
+      ],
+      "typeVersion": 1,
+      "id": "81d53c93-856e-40f1-bc6d-3fd94a5b1417",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "Buat video presentasi di upload ke youtube, deadline Jumat 23:59\n\nIntinya sabtu sudah ada videonya. Durasi maksimal 7 menit.",
+        "height": 192
+      },
+      "id": "c9c9ff67-a166-4153-8f6f-7a9031c176ca",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -784,
+        416
+      ]
+    },
+    {
+      "parameters": {
+        "content": "Background Kenapa harus di otomatisasi\n\nUntuk mempermudah alur pemrosesan para pendaftar yang langsung di intergrasikan dengan email para orang tua yang memberikan informasi terkait Open House dan Trial Class.",
+        "height": 144,
+        "width": 304
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -432,
+        -32
+      ],
+      "typeVersion": 1,
+      "id": "7e8c8ca8-c4b9-4957-964e-c49b6affac16",
+      "name": "Sticky Note3"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Hanya Data Lengkap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hanya Data Lengkap": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Kirim Email Maaf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Kirim Email Selamat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Kirim Email Rekomendasi SD",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get row(s) in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Filter Diterima 7 Hari",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Diterima 7 Hari": {
+      "main": [
+        [
+          {
+            "node": "Summarize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Filter Ditolak 7 Hari",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Ditolak 7 Hari": {
+      "main": [
+        [
+          {
+            "node": "Summarize1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timezone": "Asia/Jakarta"
+  },
+  "versionId": "65df3501-8007-43db-a0ea-4f84809fed9c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f7c7f5e3be0bce8dc67dcd9b99e80662db32e2e6428b377e86fc73b3f4f12b1f"
+  },
+  "nodeGroups": [],
+  "id": "Z5KIgbGDKZmNrrbL",
+  "tags": []
+}
