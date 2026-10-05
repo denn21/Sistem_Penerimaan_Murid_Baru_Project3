@@ -1,83 +1,80 @@
-# 🎓 Automated Student Admission System
+# 🎓 Sistem Penerimaan Siswa Otomatis
 
-An automated student admission workflow built with **n8n** to simplify and streamline the student registration and selection process.
+Alur kerja penerimaan siswa otomatis yang dibangun dengan **n8n** untuk menyederhanakan dan mengoptimalkan proses pendaftaran dan seleksi siswa.
 
-The system automatically processes applicant data from Google Sheets, evaluates applicants based on predefined criteria, sends personalized email notifications, provides AI-powered alternative school recommendations, and generates a weekly admission summary.
+Sistem secara otomatis memproses data pelamar dari Google Sheets, mengevaluasi pelamar berdasarkan kriteria yang telah ditentukan, mengirimkan notifikasi email yang dipersonalisasi, memberikan rekomendasi sekolah alternatif bertenaga AI, dan menghasilkan ringkasan penerimaan mingguan.
 
 ---
 
-## 🚀 Features
+## 🚀 Fitur
 
-- 📥 **Automatic Registration Processing**
-  - Receives new student registration data from Google Sheets.
-  - Checks whether the required applicant information is complete.
+- 📥 **Pemrosesan Pendaftaran Otomatis**
+  - Menerima data pendaftaran siswa baru dari Google Sheets.
+  - Memeriksa apakah informasi pelamar yang diperlukan sudah lengkap.
 
-- 🔎 **Automated Applicant Screening**
-  - Evaluates applicants based on predefined criteria such as:
-    - Applicant age
-    - Parent's income range
-    - Required registration information
+- 🔎 **Penyaringan Pelamar Otomatis**
+  - Mengevaluasi pelamar berdasarkan kriteria yang telah ditentukan seperti:
+    - Usia pelamar
+    - Kisaran penghasilan orang tua
+    - Informasi pendaftaran yang diperlukan
 
-- ✅ **Automated Admission Classification**
-  - Automatically categorizes applicants into:
-    - Accepted
-    - Rejected
-    - Alternative recommendation
+- ✅ **Klasifikasi Penerimaan Otomatis**
+  - Secara otomatis mengkategorikan pelamar ke dalam:
+    - Diterima
+    - Ditolak
+    - Rekomendasi alternatif
 
-- 📧 **Automated Email Notifications**
-  - Sends personalized emails to parents based on the admission result.
-  - Provides information about Open House and Trial Class activities.
+- 📧 **Notifikasi Email Otomatis**
+  - Mengirimkan email yang dipersonalisasi kepada orang tua berdasarkan hasil penerimaan.
+  - Memberikan informasi tentang kegiatan Open House dan Trial Class.
 
-- 🤖 **AI-Powered School Recommendations**
-  - Uses an LLM to generate recommendations for three nearby elementary schools when an applicant is not eligible due to age.
+- 🤖 **Rekomendasi Sekolah Bertenaga AI**
+  - Menggunakan LLM untuk menghasilkan rekomendasi untuk tiga sekolah dasar terdekat ketika pelamar tidak memenuhi syarat karena usia.
 
-- 📊 **Weekly Executive Summary**
-  - Automatically summarizes accepted and rejected applicants from the previous seven days.
-  - Sends the summary via email every Monday at 08:00 WIB.
+- 📊 **Ringkasan Eksekutif Mingguan**
+  - Secara otomatis meringkas pelamar yang diterima dan ditolak dari tujuh hari sebelumnya.
+  - Mengirimkan ringkasan melalui email setiap Senin pukul 08:00 WIB.
 
 ---
 <img width="591" height="358" alt="image" src="https://github.com/user-attachments/assets/d8cb4353-fcb4-40b2-84ad-f6745bf2b412" />
 
 
-## 🔄 Workflow Overview
-
-```text
 Google Sheets
       │
       ▼
-New Student Registration
+Pendaftaran Siswa Baru
       │
       ▼
-Check Required Data
+Periksa Data yang Diperlukan
       │
       ▼
-Check Student Age
+Periksa Usia Siswa
       │
-      ├─────────────── Age > 6
+      ├─────────────── Usia > 6
       │                    │
       │                    ▼
-      │              AI School Recommendation
+      │              Rekomendasi Sekolah AI
       │                    │
       │                    ▼
-      │               Email Result
+      │               Hasil Email
       │
       ▼
-Evaluate Parent Income
+Evaluasi Penghasilan Orang Tua
       │
-      ├─────────────── Rejected
+      ├─────────────── Ditolak
       │                    │
       │                    ▼
-      │               Save to Sheet
+      │               Simpan ke Sheet
       │                    │
       │                    ▼
-      │               Email Result
+      │               Hasil Email
       │
-      └─────────────── Accepted
+      └─────────────── Diterima
                            │
                            ▼
-                      Save to Sheet
+                      Simpan ke Sheet
                            │
                            ▼
-                      Email Result
+                      Hasil Email
 
 
